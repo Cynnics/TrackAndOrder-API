@@ -11,5 +11,7 @@ namespace SmartWarehouseAPI.Models
         public string Password { get; set; }
         public string Rol { get; set; } // ADMIN, EMPLEADO, REPARTIDOR, CLIENTE
         public string Telefono { get; set; }
+        public string? DireccionFacturacion { get; set; }
+        public string? nif { get; set; }
     }
 }

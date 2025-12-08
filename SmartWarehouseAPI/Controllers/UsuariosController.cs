@@ -57,6 +57,19 @@ namespace SmartWarehouseAPI.Controllers
             return await _context.Usuarios.ToListAsync();
         }
 
+        // GET: api/Usuarios/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            return usuario;
+        }
+
+
         // ✅ Crear usuario nuevo
         [HttpPost]
         [Authorize(Roles = "admin")]
