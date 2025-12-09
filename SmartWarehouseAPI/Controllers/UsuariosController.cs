@@ -93,6 +93,36 @@ namespace SmartWarehouseAPI.Controllers
             return NoContent();
         }
 
+        // ✅ Actualizar usuario parcialmente (PATCH)
+        [HttpPatch("{id}")]
+        [Authorize] // opcional: pon Roles="admin" si quieres restringir
+        public async Task<IActionResult> PatchUsuario(int id, [FromBody] Usuario update)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+                return NotFound(new { message = "Usuario no encontrado" });
+
+            // 🔄 Solo actualizar campos enviados (null = ignorar)
+            if (update.Nombre != null)
+                usuario.Nombre = update.Nombre;
+
+            if (update.Email != null)
+                usuario.Email = update.Email;
+
+            if (update.Telefono != null)
+                usuario.Telefono = update.Telefono;
+
+            if (update.Rol != null)
+                usuario.Rol = update.Rol;
+
+            if (update.Password != null)
+                usuario.Password = update.Password;
+
+            await _context.SaveChangesAsync();
+            return Ok(usuario);
+        }
+
+
         // 🔒 Generador del token
         private string GenerarToken(Usuario user)
         {

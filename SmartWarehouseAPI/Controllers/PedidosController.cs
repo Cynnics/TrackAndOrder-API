@@ -117,7 +117,7 @@ public class PedidosController : ControllerBase
             return NotFound(new { message = "Este pedido no tiene detalles." });
 
         decimal subtotal = detalles.Sum(d => d.Subtotal);
-        decimal iva = 21;
+        decimal iva = subtotal * 0.21m;
         decimal total = subtotal + iva;
 
         return Ok(new { subtotal, iva, total });
