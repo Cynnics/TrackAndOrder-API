@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartWarehouseAPI.Data;
 using SmartWarehouseAPI.Models;
+using SmartWarehouseAPI.Models.Request;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -143,22 +144,21 @@ public class RutasController : ControllerBase
 
     // PATCH: api/Rutas/5
     [HttpPatch("{id}")]
-    [Authorize(Roles = "admin,empleado")]
-    public async Task<IActionResult> PatchRuta(int id, [FromBody] RutaEntrega dto)
+    [Authorize(Roles = "admin,empleado,repartidor")]
+    public async Task<IActionResult> PatchRuta(int id, [FromBody] ActualizarRutaRequest req)
     {
         var ruta = await _context.RutasEntrega.FindAsync(id);
-        if (ruta == null)
-            return NotFound();
+        if (ruta == null) return NotFound();
 
-        ruta.IdRepartidor = dto.IdRepartidor;
-        ruta.FechaRuta = dto.FechaRuta;
-        ruta.DistanciaEstimadaKm = dto.DistanciaEstimadaKm;
-        ruta.DuracionEstimadaMin = dto.DuracionEstimadaMin;
-        ruta.Estado = dto.Estado;
+
+        ruta.DistanciaEstimadaKm = (decimal?)req.DistanciaEstimadaKm;
+        ruta.DuracionEstimadaMin = req.DuracionEstimadaMin;
 
         await _context.SaveChangesAsync();
 
         return Ok(ruta);
     }
+
+
 
 }
