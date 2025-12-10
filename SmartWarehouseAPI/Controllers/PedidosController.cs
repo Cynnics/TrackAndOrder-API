@@ -103,6 +103,32 @@ public class PedidosController : ControllerBase
         return Ok(pedido);
     }
 
+    [HttpPut("PutPedidoRepartidor/{id}")]
+    public async Task<IActionResult> PutPedidoRepartidor(int id, Pedido model)
+    {
+        var pedido = await _context.Pedidos.FindAsync(id);
+        if (pedido == null)
+            return NotFound();
+
+        if (model.IdRepartidor.HasValue)
+        {
+            var repartidor = await _context.Usuarios.FindAsync(model.IdRepartidor.Value);
+            if (repartidor == null)
+                return BadRequest($"No existe el repartidor con Id {model.IdRepartidor}");
+        }
+
+        if (string.IsNullOrWhiteSpace(model.Estado))
+            return BadRequest("El estado no puede estar vacío.");
+
+        pedido.IdRepartidor = model.IdRepartidor;
+        pedido.Estado = model.Estado;
+
+        await _context.SaveChangesAsync();
+        return Ok(pedido);
+    }
+
+
+
 
     // 🔹 GET: totales de un pedido
     [HttpGet("{id}/totales")]
