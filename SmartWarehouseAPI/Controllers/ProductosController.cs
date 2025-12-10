@@ -99,5 +99,25 @@ namespace SmartWarehouseAPI.Controllers
 
             return Ok(new { mensaje = "Producto desactivado correctamente" });
         }
+
+        [HttpPatch("{id}/stock")]
+        public async Task<IActionResult> ActualizarStock(int id, [FromBody] int nuevoStock)
+        {
+            Console.WriteLine($"📦 PATCH /api/Productos/{id}/stock - Nuevo stock: {nuevoStock}");
+
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null)
+            {
+                Console.WriteLine($"❌ Producto {id} no encontrado");
+                return NotFound(new { message = "Producto no encontrado" });
+            }
+
+            var stockAnterior = producto.Stock;
+            producto.Stock = nuevoStock;
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine($"✅ Stock actualizado: {stockAnterior} → {nuevoStock}");
+            return NoContent();
+        }
     }
 }
