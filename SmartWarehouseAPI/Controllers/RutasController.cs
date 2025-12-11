@@ -107,7 +107,7 @@ public class RutasController : ControllerBase
 
         // opcional: marcar pedido con IdRepartidor y estado en la API si lo deseas
         pedido.IdRepartidor = ruta.IdRepartidor;
-        pedido.Estado = "en_reparto";
+        pedido.Estado = "pendiente";
         await _context.SaveChangesAsync();
 
         return Ok(rp);
