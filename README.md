@@ -1,65 +1,59 @@
-📘 SmartWarehouseAPI
+📦 Track&Order API:
 
-API REST para la plataforma SmartWarehouse, sistema multiplataforma de gestión de pedidos, entregas y facturación.
+Backend REST para la plataforma Track&Order, sistema multiplataforma de gestión de pedidos, entregas y facturación.
 
-🚀 Descripción general
+🛠️ Tecnologías:
 
-SmartWarehouseAPI es el backend que conecta la aplicación de escritorio (C#) y la aplicación móvil Android (Kotlin).
-Proporciona servicios REST para gestionar usuarios, pedidos, productos, facturas y rutas de entrega.
+| Componente    | Tecnología                     |
+|---------------|--------------------------------|
+| Lenguaje      | C# (.NET 8)                    |
+| Framework     | ASP.NET Core Web API           |
+| Base de datos | MySQL                          |
+| ORM           | Entity Framework Core (Pomelo) |
+| Seguridad     | JWT Bearer                     |
+| Documentación | Swagger / OpenAPI              |
 
-La autenticación se realiza mediante JSON Web Tokens (JWT) para garantizar la seguridad y control de acceso según roles:
+🚀 Inicio rápido:
 
-ADMIN y EMPLEADO (escritorio)
+git clone https://github.com/<tuusuario>/TrackAndOrderAPI.git
+cd TrackAndOrderAPI
 
-REPARTIDOR y CLIENTE (Android)
+Configura tu conexión en `appsettings.json`:
+{
+  "ConnectionStrings": {
+    "SmartWarehouseDB": "server=localhost;database=trackorder_db;user=root;password=TU_PASSWORD;"
+  }
+}
 
-🧩 Características principales
+Ejecuta con `dotnet run` y abre Swagger en `http://localhost:5294/swagger`.
 
-🔐 Login seguro con JWT
+🔐 Autenticación:
 
-📦 Gestión de productos, usuarios y pedidos
+La API usa JWT Bearer. Obtén tu token con:
 
-🚚 Asignación de rutas a repartidores
+POST /api/Usuarios/login
+{ "email": "admin@example.com", "password": "tu_password" }
 
-💸 Generación y consulta de facturas
+Incluye el token en cada petición: `Authorization: Bearer <token>`
 
-🌐 Conexión a base de datos MySQL centralizada
+📡 Endpoints principales:
 
-🧰 Swagger UI para pruebas rápidas
+| Recurso                | Ruta base          |
+|------------------------|--------------------|
+| Usuarios               | `/api/Usuarios`    |
+| Productos              | `/api/Productos`   |
+| Pedidos                | `/api/Pedidos`     |
+| Facturas               | `/api/Facturas`    |
+| Albaranes              | `/api/Albaranes`   |
+| Rutas de entrega       | `/api/Rutas`       |
+| Ubicaciones repartidor | `/api/Ubicaciones` |
 
-🔄 Compatible con Visual Studio 2022 / .NET 8.0
+👥 Roles:
 
-⚙️ Tecnologías
-Componente	Tecnología
-Lenguaje	C# (.NET 8)
-Framework	ASP.NET Core Web API
-Base de datos	MySQL
-ORM	Entity Framework Core (Pomelo)
-Seguridad	JWT (Microsoft.AspNetCore.Authentication.JwtBearer)
-Documentación	Swagger / OpenAPI
-📡 Endpoints principales
-Endpoint	Método	Descripción
-/api/usuarios/login	POST	Autenticación y generación de token
-/api/pedidos	GET / POST / PUT / DELETE	CRUD de pedidos
-/api/productos	GET / POST / PUT / DELETE	CRUD de productos
-/api/facturas	GET / POST	Facturación y consulta
-/api/rutas	GET / POST	Gestión de rutas de entrega
-🛠️ Configuración local
+`admin` · `empleado` · `repartidor` · `cliente`
 
-Clonar el repositorio:
+Los roles `admin` y `empleado` acceden desde la app de escritorio (C#). Los roles `repartidor` y `cliente` desde la app Android (Kotlin).
 
-git clone https://github.com/<tuusuario>/SmartWarehouseAPI.git
+🧠 Autor:
 
-
-Configurar conexión MySQL en appsettings.json.
-
-Instalar dependencias NuGet.
-
-Ejecutar con Ctrl + F5.
-
-Probar endpoints en http://localhost:5000/swagger.
-
-🧠 Autores
-
-Proyecto desarrollado por Kevin Guerra,
-para el TFG de Desarrollo de Aplicaciones Multiplataforma (DAM).
+Proyecto desarrollado por Kevin Guerra para el TFG de Desarrollo de Aplicaciones Multiplataforma (DAM).
